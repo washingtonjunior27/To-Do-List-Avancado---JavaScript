@@ -164,7 +164,7 @@ const editFunc = (index) => {
 
 const deleteTodo = (index) => {
     const getUsers = getLocalStorage()[index];
-    const response = confirm(`Tem certeza que deseja excluir o item ${getUsers}`)
+    const response = confirm(`Tem certeza que deseja excluir a tarefa ${getUsers.todo}`)
     if(response){
         deleteTodoLS(index);
         readTodo();
