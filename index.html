@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title">To Do List</h1>
+        <nav class="navbar">
+            <form id="formSearch">
+                <input type="search" id="inputSearch" placeholder="Pesquisar">
+                <button disabled>
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </nav>
+        <button id="toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <main class="container">
+        <div class="error danger">
+            <h3 id="errorMessage">Preencha os campos vazios</h3>
+            <button id="closeError" class="danger">
+                <i class="fas fa-xmark"></i>
+            </button>
+        </div>
+
+        <form id="formTodo">
+            <input type="text" id="inputTodo" placeholder="Cadastrar Tarefa" data-index="new">
+            <button id="btnTodo">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </form>
+
+        <form id="filterTodo">
+            <select id="selectTodo">
+                <option value="all">Todos</option>
+                <option value="done">Completos</option>
+                <option value="incomplete">A fazer</option>
+            </select>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tarefa</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+/* GOOGLE FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+:root{
+    --blue: #1D3557;
+    --dark: #232323;
+    --white: #F1FAEE;
+    --green: #008000;
+    --button: #0077b6;
+    --button-hover: #457B9D;
+    --danger: #E63946;
+    --warning: #FB8500;
+    --transition: all .4s;
+}
+button, input{
+    outline: none;
+    padding: 1rem;
+    font-size: 1.3rem;
+    border: 1px solid var(--dark);
+}
+button{
+    cursor: pointer;
+    color: var(--white);
+    background-color: var(--button);
+    transition: var(--transition);
+}
+button:hover{
+    background-color: var(--button-hover);
+}
+button i{
+    pointer-events: none;
+}
+
+/* HEADER */
+.header{
+    padding: 1rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--blue);
+}
+.header-title{
+    color: var(--white);
+    font-size: 2.5rem;
+}
+#formSearch{
+    display: flex;
+    align-items: center;
+}
+#formSearch input{
+    min-width: 30rem;
+}
+#formSearch button{
+    cursor: not-allowed;
+}
+#toggle{
+    display: none;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 2.5rem;
+}
+
+/* MAIN */
+.container{
+    padding: 2rem 5%;
+}
+.error{
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    color: var(--white);
+    margin-bottom: 2rem;
+}
+.error.active{
+    display: flex;
+}
+#errorMessage{
+    font-size: 1.6rem;
+}
+#closeError{
+    border: none;
+    font-size: 2rem;
+}
+#closeError:hover{
+    background-color: var(--danger);
+    color: var(--dark);
+}
+#emptyTasks{
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+#formTodo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#inputTodo{
+    min-width: 50%;
+}
+.check{
+    background-color: var(--blue);
+}
+.check:hover{
+    background-color: var(--button);
+}
+.warning{
+    background-color: var(--warning);
+}
+.danger{
+    background-color: var(--danger);
+}
+#filterTodo{
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    position: relative;
+}
+#selectTodo{
+    padding: 1rem;
+    font-size: 1.4rem;
+    background-color: var(--blue);
+    color: var(--white);
+    outline: none;
+    border: 2px solid var(--dark);
+    cursor: pointer;
+}
+.table-responsive{
+    overflow-x: auto;
+}
+.table{
+    margin-top: 2rem;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    border: 1px solid var(--dark);
+}
+.table thead{
+    background-color: var(--blue);
+    color: var(--white);
+}
+.table thead tr th{
+    font-size: 1.6rem;
+    padding: 1rem;
+}
+.table tbody tr td{
+    padding: 1rem;
+    font-size: 1.3rem;
+}
+.table tbody tr.complete{
+    background-color: var(--green);
+    color: var(--white);
+    font-style: italic;
+    font-weight: 600;
+}
+.table tbody tr .actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+.table tbody tr .todoText{
+    min-width: 20rem;
+}
+
+/* MEDIA QUERY */
+@media(max-width: 540px){
+    .header{
+        position: relative;
+    }
+    #toggle{
+        display: block;
+    }
+    .navbar{
+        background-color: var(--blue);
+        width: 100%;
+        position: absolute;
+        top: 98%;
+        left: 0;
+        padding: 1rem;
+        transition: var(--transition);
+        clip-path: inset(0 0 100% 0);
+    }
+    .navbar.active{
+        clip-path: inset(0 0 0 0);
+    }
+    #formSearch input{
+        width: 100%;
+        min-width: auto;
+    }
+}
