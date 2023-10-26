@@ -22,6 +22,9 @@ const deleteTodoLS = (index) => {
 }
 
 // FUNCTIONS
+// SANITIZE
+const sanitizeItem = (string) => DOMPurify.sanitize(string);
+
 const openMenuMobile = () => document.querySelector('.navbar').classList.toggle('active');
 
 const closeError = () => document.querySelector('.error').classList.remove('active');
@@ -30,12 +33,12 @@ const validateTodo = () => {
     const inputTodo = document.getElementById('inputTodo').value;
 
     if(!inputTodo){
-        document.getElementById('errorMessage').innerText = "Preencha os campos vazios!";
+        document.getElementById('errorMessage').textContent = "Preencha os campos vazios!";
         document.querySelector('.error').classList.add('active');
         document.getElementById('inputTodo').dataset.index = "new"; //if edit error return data-index to new
         document.getElementById('inputTodo').placeholder = "Cadastrar tarefa"; ////if edit error return placeholder to new
         document.getElementById('btnTodo').classList.remove('warning'); //if edit error remove button background color
-        document.getElementById('btnTodo').innerHTML = `<i class="fa-solid fa-plus"></i>`; //if edit error change fa icon
+        document.getElementById('btnTodo').innerHTML = sanitizeItem(`<i class="fa-solid fa-plus"></i>`); //if edit error change fa icon
         return false
     }
 
@@ -72,8 +75,8 @@ const changeTodo = () => {
 // CRUD - DOM
 const createTodo = () => {
     if(validateTodo()){
-        const inputTodo = document.getElementById('inputTodo').value;
-        const inputIndex = document.getElementById('inputTodo').dataset.index;
+        const inputTodo = sanitizeItem(document.getElementById('inputTodo').value);
+        const inputIndex = sanitizeItem(document.getElementById('inputTodo').dataset.index);
 
         const todo = {
             todo: inputTodo,
@@ -91,13 +94,13 @@ const createTodo = () => {
             document.getElementById('inputTodo').dataset.index = "new"; //return data index to new
             document.getElementById('inputTodo').placeholder = "Cadastrar tarefa"; //return placeholder to register
             document.getElementById('btnTodo').classList.remove('warning'); //remove background orange
-            document.getElementById('btnTodo').innerHTML = `<i class="fa-solid fa-plus"></i>`; //return icon fa to add
+            document.getElementById('btnTodo').innerHTML = sanitizeItem(`<i class="fa-solid fa-plus"></i>`); //return icon fa to add
         }
     }
 }
 
 const searchTodo = () => {
-    const inputSearch = document.getElementById('inputSearch').value.toLowerCase();
+    const inputSearch = sanitizeItem(document.getElementById('inputSearch').value.toLowerCase());
     const getTodos = document.querySelectorAll('.table tbody tr');
 
     if(inputSearch == ""){
@@ -131,35 +134,63 @@ const readTodo = () => {
                 newTr.classList.add('complete');
             }
 
+            const newTdTodo = document.createElement('td')
+            newTdTodo.setAttribute('class', 'todoText');
+            newTdTodo.textContent = sanitizeItem(todo.todo);
+
+            const newTdActions = document.createElement('td');
+            newTdActions.setAttribute('class', 'actions');
+
+            const newBtnCheck = document.createElement('button');
+            newBtnCheck.setAttribute('id', sanitizeItem(`check-${index}`));
+            newBtnCheck.setAttribute('class','check');
+            
+            const newBtnEdit = document.createElement('button');
+            newBtnEdit.setAttribute('id', sanitizeItem(`edit-${index}`));
+            newBtnEdit.setAttribute('class','warning');
+            
+            const newBtnDelete = document.createElement('button');
+            newBtnDelete.setAttribute('id', sanitizeItem(`delete-${index}`));
+            newBtnDelete.setAttribute('class','danger');
+
+            const newIconCheck = document.createElement('i');
+            newIconCheck.setAttribute('class', 'fa-solid fa-check');
+            
+            const newIconEdit = document.createElement('i');
+            newIconEdit.setAttribute('class', 'fa-regular fa-pen-to-square');
+            
+            const newIconDelete = document.createElement('i');
+            newIconDelete.setAttribute('class', 'ffas fa-xmark');
+
+            newBtnCheck.appendChild(newIconCheck);
+            newBtnEdit.appendChild(newIconEdit);
+            newBtnDelete.appendChild(newIconDelete);
+            newTdActions.append(newBtnCheck, newBtnEdit, newBtnDelete);
+
+            newTr.append(newTdTodo, newTdActions);
     
-            newTr.innerHTML = `<td class="todoText">${todo.todo}</td>
-                                <td class="actions">
-                                    <button id="check-${index}" class="check">
-                                        <i class="fa-solid fa-check"></i>
-                                    </button>
-                                    <button id="edit-${index}" class="warning">
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </button>
-                                    <button id="delete-${index}" class="danger">
-                                        <i class="fas fa-xmark"></i>
-                                    </button>
-                                </td>`;
             table.appendChild(newTr);
         });
     }else{
         const newTr = document.createElement('tr');
-        newTr.innerHTML = "<td colspan='2' id='emptyTasks'>Sem tarefas cadastradas!</td>"
+
+        const newTd = document.createElement('td');
+        newTd.setAttribute('colspan', '2');
+        newTd.setAttribute('id', 'emptyTasks');
+        newTd.textContent = 'Sem tarefas cadastradas!';
+        
+        newTr.appendChild(newTd);
         table.appendChild(newTr);
     }
 }
 
 const editFunc = (index) => {
     const getUsers = getLocalStorage()[index]; //getuser
-    document.getElementById('inputTodo').value = getUsers.todo; //place input with user
+    document.getElementById('inputTodo').value = sanitizeItem(getUsers.todo); //place input with user
     document.getElementById('inputTodo').dataset.index = index; //change index new to user index for edit
     document.getElementById('inputTodo').placeholder = "Editar tarefa"; //change placeholder input
     document.getElementById('btnTodo').classList.add('warning');//change background color button
-    document.getElementById('btnTodo').innerHTML = `<i class="fa-regular fa-pen-to-square"></i>`;//change icon button
+    document.getElementById('btnTodo').innerHTML = sanitizeItem(`<i class="fa-regular fa-pen-to-square"></i>`);//change icon button
 }
 
 const deleteTodo = (index) => {
